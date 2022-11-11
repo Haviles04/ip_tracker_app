@@ -26,7 +26,7 @@ const handleSubmit= (search) => {
             type="image"
             src={iconArrow}
             alt="arrow"
-            onClick={handleSubmit(searchTerm)}
+            onClick={handleSubmit({searchTerm})}
             className="h-[58px] w-[58px] bg-black object-none"
           />
         </label>
