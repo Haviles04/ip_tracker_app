@@ -26,10 +26,12 @@ function App() {
   return (
     <div className="w-full h-full flex-col justify-center">
       <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-[-80]">
         <Infobar info={info} />
       </div>
+      <div className="flex">
       <Map />
+      </div>
     </div>
   );
 }
