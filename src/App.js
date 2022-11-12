@@ -5,20 +5,20 @@ import Infobar from "./components/Infobar";
 import Map from "./components/Map";
 
 function App() {
+  let apiKey = process.env.REACT_APP_API_KEY;
   const [searchTerm, setSearchTerm] = useState("");
   const [info, setInfo] = useState(null);
-
-  let apiKey = process.env.REACT_APP_API_KEY;
-
+ 
   useEffect(() => {
     if (!info) {
-      fetch(`https://geo.ipify.org/api/v2/country?apiKey=${apiKey}`)
+      fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}`)
         .then((response) => {
           return response.json();
         })
         .then((response) => {
-          setInfo(response);
-        });
+          setInfo(response); 
+          
+        })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -30,7 +30,7 @@ function App() {
         <Infobar info={info} />
       </div>
       <div className="flex">
-      <Map />
+      <Map key={info&& (info.location.lat)} info={info} />
       </div>
     </div>
   );

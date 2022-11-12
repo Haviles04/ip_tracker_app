@@ -2,9 +2,7 @@ import React from "react";
 import iconArrow from "../assets/icon-arrow.svg";
 
 const Searchbar = ({searchTerm, setSearchTerm}) => {
-  
-console.log(searchTerm);
-  
+   
 const handleSubmit= (search) => {
 
 };
