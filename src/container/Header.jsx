@@ -1,7 +1,7 @@
 import React from "react";
 import Searchbar from "../components/Searchbar";
 
-const Header = ({searchTerm, setSearchTerm}) => {
+const Header = ({setInfo}) => {
   
   return (
     <div className="w-full h-[280px] bg-hero bg-cover flex justify-center">
@@ -10,7 +10,7 @@ const Header = ({searchTerm, setSearchTerm}) => {
           <h1>IP Address Tracker</h1>
         </div>
         <div className="pt-[28px] flex justify-center">
-        <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <Searchbar setInfo={setInfo} />
         </div>
       </div>
     </div>

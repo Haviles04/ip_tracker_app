@@ -2,11 +2,11 @@ import "./App.css";
 import Header from "./container/Header";
 import React, { useEffect, useState } from "react";
 import Infobar from "./components/Infobar";
-import Map from "./components/Map";
+import Maps from "./components/Map";
 
 function App() {
   let apiKey = process.env.REACT_APP_API_KEY;
-  const [searchTerm, setSearchTerm] = useState("");
+  
   const [info, setInfo] = useState(null);
  
   useEffect(() => {
@@ -16,8 +16,7 @@ function App() {
           return response.json();
         })
         .then((response) => {
-          setInfo(response); 
-          
+          setInfo(response);  
         })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,12 +24,12 @@ function App() {
 
   return (
     <div className="w-full h-full flex-col justify-center">
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header setInfo={setInfo} />
       <div className="flex justify-center mt-[-80]">
         <Infobar info={info} />
       </div>
       <div className="flex">
-      <Map key={info&& (info.location.lat)} info={info} />
+      <Maps info={info} />
       </div>
     </div>
   );
