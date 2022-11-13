@@ -29,7 +29,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Github](https://github.com/Haviles04/ip_tracker_app)
-- Live Site URL: [Add live site URL here](https://cool-boba-748cd4.netlify.app/)
+- Live Site URL: [Netlify](https://cool-boba-748cd4.netlify.app/)
 
 ## My process
 
