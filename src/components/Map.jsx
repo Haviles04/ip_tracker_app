@@ -6,7 +6,7 @@ const Maps = ({ info }) => {
   
 
   return (
-    <div className=" w-full h-full mt-[-80px] z-0">
+    <div className=" w-full h-full mt-[-160px] md:mt-[-80px] z-0">
       <MapContainer
         style={{ height: "1000px" }}
         center={

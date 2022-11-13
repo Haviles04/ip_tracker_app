@@ -1,29 +1,70 @@
 import React, { useState } from "react";
 import iconArrow from "../assets/icon-arrow.svg";
 
-const Searchbar = ({ setInfo }) => {
+const Searchbar = ({ setInfo, setErrorMsg, setLoading }) => {
   const [searchTerm, setSearchTerm] = useState("");
+
+  //checks input to determine if it's an ip or domain, then fetchs from correct api, if response is an needed object displays error message
+
   const handleSubmit = (search) => {
-    fetch(
-      `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_API_KEY}&ipAddress=${search}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        setInfo(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const ipRegEx =
+      /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi;
+    const domainRegex =
+      /^(?!:\/\/)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
+
+    if (ipRegEx.test(search)) {
+      setLoading(true);
+      fetch(
+        `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_API_KEY}&ipAddress=${search}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          if (response.hasOwnProperty("ip")) {
+            setInfo(response);
+            setErrorMsg(false);
+            setLoading(false);
+          } else {
+            setErrorMsg(true);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (domainRegex.test(search)) {
+      setLoading(true);
+      fetch(
+        `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_API_KEY}&domain=${search}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          if (response.hasOwnProperty("ip")) {
+            setInfo(response);
+            setErrorMsg(false);
+            setLoading(false);
+          } else {
+            setErrorMsg(true);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setErrorMsg(true);
+    }
   };
 
   return (
     <div>
       <form>
-        <label className="h-[58px] w-[555px] rounded-xl flex align-center overflow-hidden">
+        <label className="w-[327px] h-[58px] md:w-[555px] rounded-xl flex overflow-hidden">
           <input
-            className="h-[58px] w-[497px] pl-5 font-medium outline-none"
+            className="h-[58px] w-[497px] md:pl-5 font-medium outline-none"
             placeholder="Search for any IP address or domain"
             type="text"
             onChange={(e) => {
