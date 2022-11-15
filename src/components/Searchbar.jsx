@@ -12,42 +12,24 @@ const Searchbar = ({ setInfo, setErrorMsg, setLoading }) => {
     const domainRegex =
       /^(?!:\/\/)([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$/gi;
 
-    if (ipRegEx.test(search)) {
+    const mode = ipRegEx.test(search) ? 'ipAddress' : domainRegex.test(search) ? 'domain' : false;
+
+
+    if (mode) {
       setLoading(true);
       fetch(
-        `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_API_KEY}&ipAddress=${search}`
+        `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_API_KEY}&${mode}=${search}`
       )
         .then((response) => {
           return response.json();
         })
         .then((response) => {
-          if (response.hasOwnProperty("ip")) {
-            setInfo(response);
-            setErrorMsg(false);
-            setLoading(false);
-          } else {
+          console.log(response);
+          if (response.hasOwnProperty('code')) {
             setErrorMsg(true);
             setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else if (domainRegex.test(search)) {
-      setLoading(true);
-      fetch(
-        `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env.REACT_APP_API_KEY}&domain=${search}`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          if (response.hasOwnProperty("ip")) {
-            setInfo(response);
-            setErrorMsg(false);
-            setLoading(false);
           } else {
-            setErrorMsg(true);
+            setInfo(response);
             setLoading(false);
           }
         })
@@ -56,7 +38,7 @@ const Searchbar = ({ setInfo, setErrorMsg, setLoading }) => {
         });
     } else {
       setErrorMsg(true);
-    }
+    } 
   };
 
   return (
